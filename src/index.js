@@ -38,12 +38,17 @@ function onInputCountry() {
                 refs.countryList.innerHTML = '';
                 refs.countryInfo.innerHTML =  unique.join('');
             }
-        })
-            .catch(error => {
+            if (countrys.length === 0) {
                 Notify.failure('Oops, there is no country with that name');
                 refs.countryInfo.innerHTML = '';
-                refs.countryList.innerHTML = '';
-                return error;
+                refs.countryList.innerHTML = '';          
+             }
+
+        })
+            
+        .catch(error => {
+            Notify.failure('Oops, there is no country with that name');
+            return error.message;
         })
     
 }

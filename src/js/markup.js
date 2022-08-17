@@ -13,8 +13,8 @@ export function uniqueMarkup({ flags, name, capital, population, languages }) {
     return ` 
      <div class="country-info__container">
         <div class="country-info__wrapper">
-            <img class="country-info__flags" src="${flags.svg}" alt="${name.official}" width="50" />
-            <h3 class="country-info__name">${name.official}</h3>
+            <img class="country-info__flags" src="${flags.svg}" alt="${name.official}" width="75" />
+            <h2 class="country-info__name">${name.official}</h2>
         </div>
         <div class="country-info__wrapper">
             <h4 class="country-info__key"> Capital: </h4>
