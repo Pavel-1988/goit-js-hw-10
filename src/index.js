@@ -12,23 +12,24 @@ const DEBOUNCE_DELAY = 300;
 refs.searchInp.addEventListener('input', debounce(onInputCountry, DEBOUNCE_DELAY));
 
 function onInputCountry() {
-    let countryName = refs.searchInp.value;
+    const countryName = refs.searchInp.value;
    
     if (countryName === '') {
+        Notify.failure('Oops, there is no country with that name');
         refs.countryList.innerHTML = '';
         refs.countryInfo.innerHTML = '';
         return;
     }
 
         fetchCountries(countryName)
-        .then(countrys => {
+        .then(countrys => {           
             if (countrys.length > 10) {
                 Notify.info("Too many matches found. Please enter a more specific name.");
                 refs.countryList.innerHTML = '';
                 refs.countryInfo.innerHTML = '';
                 return
             }
-            if (countrys.length <= 10) {
+            if (( countrys.length > 1)&&( countrys.length <= 10)) {
                 const similar = countrys.map(country => similarMarkup(country));
                 refs.countryList.innerHTML = similar.join('');
                 refs.countryInfo.innerHTML = '';
@@ -38,18 +39,23 @@ function onInputCountry() {
                 refs.countryList.innerHTML = '';
                 refs.countryInfo.innerHTML =  unique.join('');
             }
-            if (countrys.length === 0) {
-                Notify.failure('Oops, there is no country with that name');
-                refs.countryInfo.innerHTML = '';
-                refs.countryList.innerHTML = '';          
-             }
-
+            // if (countrys.length === 0) {
+            //         Notify.failure('Oops, there is no country with that name');
+            //         refs.countryInfo.innerHTML = '';
+            //         refs.countryList.innerHTML = '';          
+            // }
         })
-            
+        
+            // тільки так відловлює помилку
         .catch(error => {
             Notify.failure('Oops, there is no country with that name');
-            return error.message;
-        })
+            return error;
+        });
     
+        // .catch(error => {
+        //     Notify.failure.error.message;
+           
+        // });
+
 }
 
